@@ -1,24 +1,15 @@
-# Logs
 logs
 *.log
 npm-debug.log*
 
 # Dependency directory
 node_modules
-/.pnp
-.pnp.js
 
 # Optional npm cache directory
 .npm
+.env
 
 # Optional REPL history
 .DS_Store
 .idea
 .vscode
-
-# misc
-.DS_Store
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local

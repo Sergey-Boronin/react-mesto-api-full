@@ -86,11 +86,12 @@ class Api {
 }
 
 const api = new Api({
-  baseUrl: "https://mesto.nomoreparties.co/v1/cohort-19/",
+  baseUrl: "https://api.boronin.nomoredomains.icu",
   headers: {
-    authorization: "6bac334c-d144-4b45-9ca7-72887d27cd10",
-    "Content-Type": "application/json",
-  },
+    Accept: "application/json",
+    "Content-type":"application/json",
+    "Authorization":`Bearer ${localStorage.getItem('token')}`
+}
 });
 
 export default api;
