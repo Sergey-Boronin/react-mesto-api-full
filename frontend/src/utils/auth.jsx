@@ -1,5 +1,5 @@
 // export const baseUrl = "https://auth.nomoreparties.co";
-export const baseUrl = "http://localhost:3005";
+export const baseUrl = "https://api.boronin.nomoredomains.icu";
 
 const responseCheck = (response) =>
   response.ok ? response.json() : Promise.reject(`Ошибка ${response.status}`);

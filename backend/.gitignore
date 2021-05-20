@@ -5,6 +5,8 @@ npm-debug.log*
 
 # Dependency directory
 node_modules
+/.pnp
+.pnp.js
 
 # Optional npm cache directory
 .npm
@@ -13,3 +15,10 @@ node_modules
 .DS_Store
 .idea
 .vscode
+
+# misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
