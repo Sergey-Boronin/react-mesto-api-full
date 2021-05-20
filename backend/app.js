@@ -7,7 +7,7 @@ const cors = require('cors');
 const NotFoundError = require('./errors/NotFoundError');
 require('dotenv').config();
 
-const { PORT = 3005 } = process.env;
+const { PORT = 3000 } = process.env;
 
 const { login, createUser } = require('./controllers/users');
 const { logValidation, regValidation } = require('./middlewares/validationCheck');
