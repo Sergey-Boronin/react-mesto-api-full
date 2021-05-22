@@ -89,7 +89,7 @@ class Api {
 }    
 
 const api = new Api({
-    url:"https://boronin.nomoredomains.icur", // localhost:3000
+    url:"https://boronin.nomoredomains.icu", // localhost:3000
     /* url:"http://localhost:3000", */
     headers: {
         Accept: "application/json",
