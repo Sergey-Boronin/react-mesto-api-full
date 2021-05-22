@@ -7,13 +7,12 @@ const cors = require('cors');
 const NotFoundError = require('./errors/NotFoundError');
 require('dotenv').config();
 
-const { PORT = 3000 } = process.env;
-
-const { login, createUser } = require('./controllers/users');
-const { logValidation, regValidation } = require('./middlewares/validationCheck');
-const auth = require('./middlewares/auth');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
+const { login, createUser } = require('./controllers/users');
+const { loginValidation, registrValidation } = require('./middlewares/validationCheck');
+const auth = require('./middlewares/auth');
 
+const { PORT = 3000 } = process.env;
 const app = express();
 
 app.use(cors());
@@ -39,17 +38,17 @@ app.get('/crash-test', () => {
   }, 0);
 });
 
-app.post('/signin', logValidation, login);
-app.post('/signup', regValidation, createUser);
+app.post('/signin', loginValidation, login);
+app.post('/signup', registrValidation, createUser);
 
 app.use('/users', auth, require('./routes/users'));
 app.use('/cards', auth, require('./routes/cards'));
 
+app.use(errorLogger);
+
 app.use('*', () => {
   throw new NotFoundError('Запрашиваемый ресурс не найден');
 });
-
-app.use(errorLogger);
 
 app.use(errors());
 

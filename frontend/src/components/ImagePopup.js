@@ -1,29 +1,14 @@
-import React from "react";
-import deleteButtonImg from "../images/close-button-image.svg";
+import React from 'react'
 
 function ImagePopup(props) {
-  return (
-    <section
-      className={`popup popup-${props.name} ${props.card && "popup_opened"}
-      `}
-    >
-      <div className="popup-scale__container">
-        <button
-          type="button"
-          className="popup__close page-button"
-          onClick={props.onClose}
-        >
-          <img src={deleteButtonImg} alt="Закрыть форму." />
-        </button>
-        <img
-          src={props.card && props.card.link}
-          alt={props.card && `Картинка ${props.card.name}`}
-          className="popup-scale__image"
-        />
-        <p className="popup-scale__caption">{props.card && props.card.name}</p>
-      </div>
-    </section>
-  );
-}
-
+    return (
+        <section onClick={props.onOverlayClose} className={`popup popup_type_image ${props.isOpen && 'popup_opened'}`}>
+            <div className="popup__wrapper">
+                    <button className="popup__close popup__close_image" onClick={props.onClose} type="button"></button>
+                    <img className="popup__image" src={props.card.link}  alt={props.card.name}/>
+                    <h2 className="popup__subtitle">{props.card.name}</h2>
+            </div>
+        </section>     
+    )
+} 
 export default ImagePopup;

@@ -1,98 +1,101 @@
 class Api {
-  constructor({ baseUrl, headers }) {
-    this._baseUrl = baseUrl;
-    this._headers = headers;
-  }
-
-  _getResponseData(response) {
-    if (response.ok) {
-      return response.json();
+    constructor(options) {
+        this._url = options.url;
+        this._headers = options.headers;
     }
-    return Promise.reject(new Error(`Ошибка: ${response.status}`));
-  }
 
-  getUserData() {
-    return fetch(`${this._baseUrl}users/me`, {
-      headers: this._headers,
-    }).then(this._getResponseData);
-  }
-
-  updateUserData(info) {
-    return fetch(`${this._baseUrl}users/me`, {
-      method: "PATCH",
-      headers: this._headers,
-      body: JSON.stringify({
-        name: info.name,
-        about: info.about,
-      }),
-    }).then(this._getResponseData);
-  }
-
-  updateUserAvatar(data) {
-    return fetch(`${this._baseUrl}users/me/avatar`, {
-      method: "PATCH",
-      headers: this._headers,
-      body: JSON.stringify({
-        avatar: data.avatar,
-      }),
-    }).then(this._getResponseData);
-  }
-
-  getInitialCards() {
-    return fetch(`${this._baseUrl}cards`, {
-      headers: this._headers,
-    }).then(this._getResponseData);
-  }
-
-  addNewCard(data) {
-    return fetch(`${this._baseUrl}cards`, {
-      method: "POST",
-      headers: this._headers,
-      body: JSON.stringify({
-        name: data.name,
-        link: data.link,
-      }),
-    }).then(this._getResponseData);
-  }
-
-  removeCard(id) {
-    return fetch(`${this._baseUrl}cards/${id}`, {
-      method: "DELETE",
-      headers: this._headers,
-    }).then(this._getResponseData);
-  }
-
-  _like(id) {
-    return fetch(`${this._baseUrl}cards/likes/${id}`, {
-      method: "PUT",
-      headers: this._headers,
-    }).then(this._getResponseData);
-  }
-
-  _unlike(id) {
-    return fetch(`${this._baseUrl}cards/likes/${id}`, {
-      method: "DELETE",
-      headers: this._headers,
-    }).then(this._getResponseData);
-  }
-
-  changeLikeStatus(id, isLiked) {
-    if (isLiked) {
-      return this._like(id);
-    } else {
-      return this._unlike(id);
+    _getResponseData(res) {
+        if(!res.ok) {
+            return Promise.reject(`Ошибка:${res.status}`);
+        }
+            return res.json();  
     }
-  }
-}
+
+    getInitialCards() {
+        return fetch(`${this._url}/cards`, {
+            method:"GET",
+            headers: this._headers
+        })
+        .then(this._getResponseData)
+    }
+
+    postNewCard(data) {
+        return fetch(`${this._url}/cards`, {
+            method:'POST',
+            headers: this._headers,
+            body: JSON.stringify({
+                name: data.name,
+                link: data.link
+            })
+        })
+        .then(this._getResponseData)
+    }
+
+    getUserInfoMe() {
+        return fetch(`${this._url}/users/me`, {
+            headers: this._headers
+        })
+        .then(this._getResponseData)
+    }
+
+    changeUserInfo(data) {
+        return fetch(`${this._url}/users/me`, {
+            method: 'PATCH',
+            headers: this._headers,
+            body: JSON.stringify({
+                name: data.name,
+                about: data.about
+            })
+        })
+        .then(this._getResponseData)
+    }    
+
+    editAvatar(data) {
+        return fetch(`${this._url}/users/me/avatar`, {
+            method: 'PATCH',
+            headers: this._headers,
+            body:JSON.stringify({
+                avatar: data.link
+            })
+        })
+        .then(this._getResponseData)
+
+    }
+
+    changeLikeCardStatus(userId, isLiked) {
+        if(isLiked)
+            {return fetch(`${this._url}/cards/${userId}/likes`, {
+                method:'PUT',
+                headers: this._headers
+            })
+            .then(this._getResponseData)}
+        else {
+            return fetch(`${this._url}/cards/${userId}/likes`, {
+                method: 'DELETE',
+                headers: this._headers
+            })
+            .then(this._getResponseData)
+        }    
+    }
+
+    delCard(cardId) {
+        return fetch(`${this._url}/cards/${cardId}`, {
+            method:'DELETE',
+            headers: this._headers
+        })
+        .then(this._getResponseData)
+
+    }
+}    
 
 const api = new Api({
-  url:"https://api.boronin.nomoredomains.icu", // localhost:3000
-  /* url:"http://localhost:3000", */
-  headers: {
-      Accept: "application/json",
-      "Content-type":"application/json",
-      "Authorization":`Bearer ${localStorage.getItem('token')}`
-  }
-})
+    url:"https://boronin.nomoredomains.icur", // localhost:3000
+    /* url:"http://localhost:3000", */
+    headers: {
+        Accept: "application/json",
+        "Content-type":"application/json",
+        "Authorization":`Bearer ${localStorage.getItem('token')}`
+    } 
+}) 
 
 export default api;
