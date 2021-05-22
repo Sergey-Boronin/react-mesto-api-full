@@ -1,4 +1,3 @@
-// export const baseUrl = "https://auth.nomoreparties.co";
 export const baseUrl = "https://api.boronin.nomoredomains.icu";
 
 const responseCheck = (response) =>

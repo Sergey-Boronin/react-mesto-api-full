@@ -86,12 +86,13 @@ class Api {
 }
 
 const api = new Api({
-  baseUrl: "https://api.boronin.nomoredomains.icu",
+  url:"https://api.boronin.nomoredomains.icu", // localhost:3000
+  /* url:"http://localhost:3000", */
   headers: {
-    Accept: "application/json",
-    "Content-type":"application/json",
-    "Authorization":`Bearer ${localStorage.getItem('token')}`
-}
-});
+      Accept: "application/json",
+      "Content-type":"application/json",
+      "Authorization":`Bearer ${localStorage.getItem('token')}`
+  }
+})
 
 export default api;
