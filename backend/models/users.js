@@ -6,14 +6,14 @@ const userSchema = new mongoose.Schema({
   name: {
     type: String,
     default: 'Жак-Ив Кусто',
-    minlength: [2, 'Минимальная длина 2 символа'],
-    maxlength: [30, 'Максимальная длина 30 символов'],
+    minlength: 2,
+    maxlength: 30,
   },
   about: {
     type: String,
     default: 'Исследователь',
-    minlength: [2, 'Минимальная длина 2 символа'],
-    maxlength: [30, 'Максимальная длина 30 символов'],
+    minlength: 2,
+    maxlength: 30,
   },
   avatar: {
     type: String,
@@ -22,7 +22,7 @@ const userSchema = new mongoose.Schema({
       validator(url) {
         return /(https?):\/\/\w*\S*\./.test(url);
       },
-      message: 'Неправильный формат адреса',
+      message: 'Неправильный адрес картинки',
     },
   },
   email: {
@@ -33,7 +33,7 @@ const userSchema = new mongoose.Schema({
       validator(email) {
         return validator.isEmail(email);
       },
-      message: 'Неправильный формат почты',
+      message: 'Это не адрес почты',
     },
   },
   password: {
@@ -47,12 +47,12 @@ userSchema.statics.findUserByCredentials = function (email, password) {
   return this.findOne({ email }).select('+password')
     .then((user) => {
       if (!user) {
-        return Promise.reject(new Error('Неправильные почта или пароль'));
+        return Promise.reject(new Error('Неправильная почта/пароль'));
       }
       return bcrypt.compare(password, user.password)
         .then((matched) => {
           if (!matched) {
-            return Promise.reject(new Error('Неправильные почта или пароль'));
+            return Promise.reject(new Error('Неправильная почта/пароль'));
           }
           return user;
         });

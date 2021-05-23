@@ -1,29 +1,61 @@
-import React from 'react'
-import { Route, Switch, Link } from 'react-router-dom'
+import logo from "../images/logo.svg";
+import { Route, Switch, Link } from 'react-router-dom';
 
-function Header(props) {
-    return (
-        <header className="header">
-            <div className="header__wrapper">
-            <div className="header__logo"></div>
-            <Switch>
-                <Route exact path="/">
-                    <div className="header__container">
-                        <p className="header__email">{props.email}</p>
-                        <Link to="sign-in" className="header__link" onClick={props.onSignOut}>Выйти</Link>
-                    </div>
-                </Route>
+function Header({email, isLogged, onLogout}) {
 
-                <Route path="/sign-in">
-                    <Link to="sign-up" className="header__link">Зарегистрироваться</Link>
-                </Route>
+  const handleLogoutClick = function() {
+    // setMenuOpened(false);
+    onLogout();
+  }
 
-                <Route path="/sign-up">
-                    <Link to="sign-in" className="header__link">Войти</Link>
-                </Route>
-            </Switch>
+
+  return (
+    <header className="header">
+      <img src={logo} alt="Логотип." className="header__image" />
+      {/* <nav
+      className={isLogged ? headerNav : '' }
+      > */}
+        {/* <ul */}
+        {/* // className={menu} */}
+        {/* > */}
+          <Switch>
+            <Route path="/sign-up">
+              {/* <li className="menu__item"> */}
+              <Link className="header__link" to="sign-in">Войти</Link>
+              {/* </li> */}
+            </Route>
+            <Route path="/sign-in">
+              {/* <li className="menu__item"> */}
+              <Link className="header__link" to="sign-up">Регистрация</Link>
+              {/* </li> */}
+            </Route>
+            {isLogged?
+            <>
+            {/* <li
+            className={menuItem}>{email}
+            </li> */}
+            {/* <li  */}
+            {/* className={menuItem}> */}
+            <div
+            className="logged-in">
+            <span
+            className="logged-in__text"
+            >{email}
+            </span>
+            <span
+            className="logged-in__logout"
+            onClick={handleLogoutClick}
+            >Выйти
+            </span>
             </div>
-        </header>    
-    )
-} 
+            {/* </li> */}
+            </>
+              : ''}
+          </Switch>
+        {/* </ul> */}
+      {/* </nav> */}
+    </header>
+  );
+}
+
 export default Header;

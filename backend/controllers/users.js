@@ -7,18 +7,16 @@ const ConflictError = require('../errors/ConflictError');
 const NotFoundError = require('../errors/NotFoundError');
 const UnauthorizedError = require('../errors/UnauthorizedError');
 
-const { NODE_ENV, JWT_SECRET } = process.env;
-
 module.exports.getUsers = (req, res, next) => {
   User.find({})
-    .then((users) => res.status(200).send(users))
+    .then((users) => res.status(200).send({ data: users }))
     .catch(next);
 };
 
 module.exports.getCurrentUser = (req, res, next) => {
   User.findById(req.user._id)
-    .orFail(new Error('Запрашиваемый пользователь не найден'))
-    .then((user) => res.status(200).send(user))
+    .orFail(new Error('Пользователь не найден'))
+    .then((user) => res.status(200).send({ data: user }))
     .catch((err) => {
       throw new NotFoundError(err.message);
     })
@@ -27,8 +25,8 @@ module.exports.getCurrentUser = (req, res, next) => {
 
 module.exports.getUserById = (req, res, next) => {
   User.findById(req.params.id)
-    .orFail(new Error('Запрашиваемый пользователь не найден'))
-    .then((user) => res.status(200).send(user))
+    .orFail(new Error('Пользователь не найден'))
+    .then((user) => res.status(200).send({ data: user }))
     .catch((err) => {
       throw new NotFoundError(err.message);
     })
@@ -70,10 +68,10 @@ module.exports.patchUser = (req, res, next) => {
     { name, about },
     { new: true, runValidation: true },
   )
-    .orFail(new Error('Запрашиваемый пользователь не найден'))
-    .then((user) => res.status(200).send(user))
+    .orFail(new Error('Пользователь не найден'))
+    .then((user) => res.status(200).send({ data: user }))
     .catch((err) => {
-      if (err.message === 'Запрашиваемый пользователь не найден' || err.name === 'Невалидный id') {
+      if (err.message === 'Пользователь не найден' || err.name === 'Некорректный id') {
         throw new NotFoundError(err.message);
       } else if (err.name === 'CastError') {
         throw new BadRequestError(err.message);
@@ -85,10 +83,10 @@ module.exports.patchUser = (req, res, next) => {
 module.exports.patchAvatar = (req, res, next) => {
   const { avatar } = req.body;
   User.findByIdAndUpdate(req.user._id, { avatar }, { new: true, runValidation: true })
-    .orFail(new Error('Запрашиваемый пользователь не найден'))
-    .then((user) => res.status(200).send(user))
+    .orFail(new Error('Пользователь не найден'))
+    .then((user) => res.status(200).send({ data: user }))
     .catch((err) => {
-      if (err.message === 'Запрашиваемый пользователь не найден' || err.name === 'Невалидный id') {
+      if (err.message === 'Пользователь не найден' || err.name === 'Невалидный id') {
         throw new NotFoundError(err.message);
       } else if (err.name === 'CastError') {
         throw new BadRequestError(err.message);
@@ -102,7 +100,7 @@ module.exports.login = (req, res, next) => {
   return User.findUserByCredentials(email, password)
     .then((user) => {
       const token = jwt.sign({ _id: user._id },
-        NODE_ENV === 'production' ? JWT_SECRET : 'key',
+        'key',
         { expiresIn: '7d' });
       res.status(200).send({ token });
     })
