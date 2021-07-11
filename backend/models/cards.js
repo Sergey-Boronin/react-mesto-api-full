@@ -4,8 +4,8 @@ const cardSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
-    minlength: 2,
-    maxlength: 30,
+    minlength: [2, 'Минимальная длина 2 символа'],
+    maxlength: [30, 'Максимальная длина 30 символов'],
   },
   link: {
     type: String,
@@ -14,7 +14,7 @@ const cardSchema = new mongoose.Schema({
       validator(url) {
         return /(https?):\/\/\w*\S*\./.test(url);
       },
-      message: 'Неправильный адрес',
+      message: 'Неправильный формат адреса',
     },
   },
   owner: {
