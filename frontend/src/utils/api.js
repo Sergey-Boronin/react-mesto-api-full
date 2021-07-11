@@ -97,7 +97,7 @@ class Api {
 
 const api = new Api({
     // url:"http://localhost:3005", 
-    url:"http://api.boronin.nomoredomains.icu", 
+    url:"https://api.boronin.nomoredomains.icu", 
     headers: {
         "Content-type":'application/json',
         authorization:`Bearer ${localStorage.getItem('token')}`
