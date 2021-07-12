@@ -150,7 +150,7 @@ function App() {
 
     function signOut() {
         localStorage.removeItem('token');
-        history.push('/sign-in');
+        history.push('/signin');
         setLoggedIn(false);
     }
 
@@ -158,7 +158,7 @@ function App() {
         auth.register(password, email)
         .then((res) => {
             if(res) {
-                history.push('/sign-in')
+                history.push('/signin')
                 setInfoTooltipOpen(true)
                 setResSuccess(true)
                 setMessage('');
@@ -234,14 +234,14 @@ function App() {
                             component={Main}
                         /> 
 
-                        <Route path="/sign-up">
+                        <Route path="/signup">
                             <Register onRegister={handleRegisterSubmit} />
                         </Route>
-                        <Route path="/sign-in">
+                        <Route path="/signin">
                             <Login onLogin={handleLoginSubmit} />
                         </Route>
                         <Route>
-                            {loggedIn ? <Redirect to="/" /> : <Redirect to="/sign-in" />}
+                            {loggedIn ? <Redirect to="/" /> : <Redirect to="/signin" />}
                         </Route>
                         
                     </Switch>

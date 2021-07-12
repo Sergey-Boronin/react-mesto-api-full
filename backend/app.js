@@ -12,7 +12,7 @@ const { login, createUser } = require('./controllers/users');
 const { loginValidation, registrValidation } = require('./middlewares/validationCheck');
 const auth = require('./middlewares/auth');
 
-const { PORT = 3005 } = process.env;
+const { PORT = 3000 } = process.env;
 const app = express();
 
 app.use(cors());
@@ -38,8 +38,8 @@ app.get('/crash-test', () => {
   }, 0);
 });
 
-app.post('/sign-in', loginValidation, login);
-app.post('/sign-up', registrValidation, createUser);
+app.post('/signin', loginValidation, login);
+app.post('/signup', registrValidation, createUser);
 
 app.use('/users', auth, require('./routes/users'));
 app.use('/cards', auth, require('./routes/cards'));

@@ -11,7 +11,7 @@ const getResponse = (res) => {
 }
 
 export const register = (password, email) => {
-    return fetch(`${BASE_URL}/sign-up`, {
+    return fetch(`${BASE_URL}/signup`, {
         method: 'POST',
         headers: {
             "Content-Type": "application/json"
@@ -22,7 +22,7 @@ export const register = (password, email) => {
 }
 
 export const authorize = (password, email) => {
-    return fetch(`${BASE_URL}/sign-in`, {
+    return fetch(`${BASE_URL}/signin`, {
         method: 'POST',
         headers: {
             "Content-Type": "application/json" 
