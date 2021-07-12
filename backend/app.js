@@ -38,8 +38,8 @@ app.get('/crash-test', () => {
   }, 0);
 });
 
-app.post('/signin', loginValidation, login);
-app.post('/signup', registrValidation, createUser);
+app.post('/sign-in', loginValidation, login);
+app.post('/sign-up', registrValidation, createUser);
 
 app.use('/users', auth, require('./routes/users'));
 app.use('/cards', auth, require('./routes/cards'));
