@@ -1,6 +1,7 @@
 import api from '../utils/api';
 
-export const BASE_URL = 'url:"https://api.boronin.nomoredomains.icu"'; 
+// export const BASE_URL = 'url:"https://api.boronin.nomoredomains.icu"'; 
+export const BASE_URL = "https://api.boronin.nomoredomains.icu"; 
 // export const BASE_URL = 'http://localhost:3005'; 
 
 const getResponse = (res) => {
